@@ -12,7 +12,6 @@ Further, it allows for the tracking of network files
 ## Current Modules
 
 | Module <img width=170/>     | Description <img width=500/>                                                |
-| ----------------------------| ----------------------------------------------------------------------------|
 | APC Payroll Tracking        | Tracks erp network server for changes and dumps onto local server           |
 
 ## Settings
@@ -30,15 +29,15 @@ ACH_SRC_PATH = os.getenv('ACH_SRC_PATH')
 
 ## Potential future modules
 
-[ ] Asynchronous coroutine  
-[ ] MEC Payroll Tracking 
-[ ] GCS Payroll Tracking  
-[ ] APC Garnishment Tracking 
-[ ] MEC Garnishment Tracking 
-[ ] GCS Garnishment Tracking 
-[ ] APC Positive Pay Tracking 
-[ ] MEC Positive Pay Tracking 
-[ ] GCS Positive Pay Tracking 
+- [ ] Asynchronous coroutine  
+- [ ] MEC Payroll Tracking 
+- [ ] GCS Payroll Tracking  
+- [ ] APC Garnishment Tracking 
+- [ ] MEC Garnishment Tracking 
+- [ ] GCS Garnishment Tracking 
+- [ ] APC Positive Pay Tracking 
+- [ ] MEC Positive Pay Tracking 
+- [ ] GCS Positive Pay Tracking 
 
 ## How to use
 
