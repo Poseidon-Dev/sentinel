@@ -1,1 +1,5 @@
 theme: jekyll-theme-slate
+title: Sentinel
+description: File Tracking System
+plugins:
+- jekyll-theme-slate
