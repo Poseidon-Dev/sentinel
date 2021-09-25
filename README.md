@@ -30,15 +30,15 @@ ACH_SRC_PATH = os.getenv('ACH_SRC_PATH')
 
 ## Potential future modules
 
-- [ ] Asynchronous coroutine  
-- [ ] MEC Payroll Tracking 
-- [ ] GCS Payroll Tracking  
-- [ ] APC Garnishment Tracking 
-- [ ] MEC Garnishment Tracking 
-- [ ] GCS Garnishment Tracking 
-- [ ] APC Positive Pay Tracking 
-- [ ] MEC Positive Pay Tracking 
-- [ ] GCS Positive Pay Tracking 
+[ ] Asynchronous coroutine  
+[ ] MEC Payroll Tracking 
+[ ] GCS Payroll Tracking  
+[ ] APC Garnishment Tracking 
+[ ] MEC Garnishment Tracking 
+[ ] GCS Garnishment Tracking 
+[ ] APC Positive Pay Tracking 
+[ ] MEC Positive Pay Tracking 
+[ ] GCS Positive Pay Tracking 
 
 ## How to use
 
