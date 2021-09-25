@@ -16,14 +16,14 @@ Further, it allows for the tracking of network files
 ## Settings
 
 Update config.py to allow for mutiple companies
+Update the delay interval for changes in fetch sensitivity
+
 ```python
 COMPANIES = [('01000', 'APL')]
+
+DELAY_INTERVAL = 180
 ```
 
-Update the delay interval for changes in fetch sensitivity
-```python
-DELAY_INTERVAL = 180
-'''
 
 
 

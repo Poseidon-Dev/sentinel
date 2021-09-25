@@ -46,7 +46,7 @@ class Sentinel:
 
 
     def run(self):
-        print('==== RUNNING PAYROLL WATCHDOG ====')
+        print('=========== RUNNING PAYROLL SENTINEL ===========')
         while True:
             try:
                 check = self.check()
