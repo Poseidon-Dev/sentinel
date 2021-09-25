@@ -2,7 +2,7 @@ import os, shutil
 import asyncio
 import time
 
-from core.config import ACH_DST_PATH, ACH_DST_SUFFIX, ACH_SRC_PATH, COMPANIES
+from core.config import ACH_DST_PATH, ACH_DST_SUFFIX, ACH_SRC_PATH, COMPANIES, DELAY_INTERVAL
 from apps.sentinel import File
 from apps.sentinel.utils import loop
 
@@ -12,7 +12,7 @@ class Sentinel:
         self.directory = ACH_SRC_PATH
         self.destination = ACH_DST_PATH
         self.companies = COMPANIES
-        self.delay_interval = 10
+        self.delay_interval = DELAY_INTERVAL
 
     def delay(self):
         return time.sleep(self.delay_interval)

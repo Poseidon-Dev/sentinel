@@ -18,12 +18,13 @@ Further, it allows for the tracking of network files
 Update config.py to allow for mutiple companies
 ```python
 COMPANIES = [('01000', 'APL')]
-CURRENT_YEAR = str(date.today().year)
-
-ACH_DST_PATH = os.getenv('ACH_DST_PATH').replace('XXXX', CURRENT_YEAR)
-ACH_DST_SUFFIX = os.getenv('ACH_DST_SUFFIX')
-ACH_SRC_PATH = os.getenv('ACH_SRC_PATH')
 ```
+
+Update the delay interval for changes in fetch sensitivity
+```python
+DELAY_INTERVAL = 180
+'''
+
 
 
 ## Potential future modules
