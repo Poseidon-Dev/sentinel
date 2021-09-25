@@ -14,8 +14,18 @@ Further, it allows for the tracking of network files
 | ----------------------------| ----------------------------------------------------------------------------|
 | APC Payroll Tracking        | Tracks erp network server for changes and dumps onto local server           |
 
+## Settings
+Update config.py to allow for mutiple companies
+`COMPANIES = [('01000', 'APL')]
+CURRENT_YEAR = str(date.today().year)
+
+ACH_DST_PATH = os.getenv('ACH_DST_PATH').replace('XXXX', CURRENT_YEAR)
+ACH_DST_SUFFIX = os.getenv('ACH_DST_SUFFIX')
+ACH_SRC_PATH = os.getenv('ACH_SRC_PATH')`{.python}
+
 
 ## Potential future modules
+- [ ] Asynchronous coroutine  
 - [ ] MEC Payroll Tracking 
 - [ ] GCS Payroll Tracking  
 - [ ] APC Garnishment Tracking 
