@@ -16,12 +16,14 @@ Further, it allows for the tracking of network files
 
 ## Settings
 Update config.py to allow for mutiple companies
-`COMPANIES = [('01000', 'APL')]
+```python
+COMPANIES = [('01000', 'APL')]
 CURRENT_YEAR = str(date.today().year)
 
 ACH_DST_PATH = os.getenv('ACH_DST_PATH').replace('XXXX', CURRENT_YEAR)
 ACH_DST_SUFFIX = os.getenv('ACH_DST_SUFFIX')
-ACH_SRC_PATH = os.getenv('ACH_SRC_PATH')`{.python}
+ACH_SRC_PATH = os.getenv('ACH_SRC_PATH')
+```
 
 
 ## Potential future modules
@@ -41,3 +43,5 @@ Sentinel runs asychronously as a background process. Launch run.bat or create a 
 ## Support
 If you need some help for something, please reach out to me directly or submit an issue and I'll get to it as soon as I can
 
+## Site
+https://poseidon-dev.github.io/sentinel/
