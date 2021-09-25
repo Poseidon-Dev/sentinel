@@ -11,8 +11,7 @@ Further, it allows for the tracking of network files
 
 ## Current Modules
 
-| Module <img width=170/>     | Description <img width=500/>                                                |
-| APC Payroll Tracking        | Tracks erp network server for changes and dumps onto local server           |
+- [x] APC Payroll Tracking
 
 ## Settings
 
