@@ -1,11 +1,9 @@
 import os, shutil
-import asyncio
 import time
 
 from core.config import ACH_DST_PATH, ACH_DST_SUFFIX, ACH_SRC_PATH, COMPANIES, DELAY_INTERVAL
 from core.utils import Timer
 # from apps.sentinel import File
-from apps.sentinel.utils import loop
 
 class File:
     def __init__(self, file, directory):
@@ -51,14 +49,14 @@ class Snapshot:
         return path
 
     def snapshot(self):
-        print(self.path)
+        # print(self.path)
         dirs = os.scandir(self.path)
         snapshot = [
             File(file, self.path)
             for file in dirs
         ]
-        for file in snapshot[:5]:
-            print(file)
+        # for file in snapshot[:5]:
+        #     print(file)
         return snapshot
 
 class Put:
@@ -80,14 +78,17 @@ class Put:
         return f'{self.dst_dir}{self.dst_subdir}{self.dst_suf}'
 
     def put(self):
-        shutil.copy2(self.file.path, self.dst + self.file.stored_name)
+        try:
+            shutil.copy2(self.file.path, self.dst + self.file.stored_name)
+        except Exception as e:
+            print(e)
 
     def __str__(self):
         return f'{self.dst}/{self.file.full_name}'
 
 
 class AbstractSentinel:
-    DELAY_INTERVAL = 0
+    DELAY_INTERVAL = 20
    
     def snapshot(self):
         pass
@@ -100,11 +101,12 @@ class AbstractSentinel:
 
 class Sentinel(AbstractSentinel):
 
-    def __init__(self, src_path, src_subdir=''):
+    def __init__(self, src_path, dst_path, src_subdir='', dst_subdir=''):
         self.src_path = src_path
         self.src_subdir = src_subdir
-        # self.dst_path = dst_path
-        # self.dst_subdir = dst_subdir
+        self.dst_path = dst_path
+        self.dst_subdir = dst_subdir
+
 
     def snapshot(self):
         return Snapshot(self.src_path, self.src_subdir)
@@ -132,12 +134,18 @@ class Sentinel(AbstractSentinel):
     def run(self):
         changes = self.fetch_compare()
         for status, files in changes.items():
-            if status == 'created':
-                for file in files:
-                    print(file)
-                    # put = Put(self.dst_path, file, self.dst_subdir, '01000')
-                    # print(put)
+            if files:
+                if status == 'created':
+                    for file in files:
+                        print(file)
+                        put = Put(self.dst_path, file, self.dst_subdir, ACH_DST_SUFFIX)
+                        print(put)
+                        put.put()
 
+
+    def thread(self):
+        while True:
+            self.run()            
 
         
 
