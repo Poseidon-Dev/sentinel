@@ -11,6 +11,7 @@ if __name__ == '__main__':
         t = threading.Thread(target=s.thread)
         threads.append(t)
 
+    print("=" * 16 + " SENTINEL RUNNING " + "=" * 16)
     for t in threads:
         t.start()
    

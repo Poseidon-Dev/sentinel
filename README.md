@@ -12,6 +12,11 @@ Further, it allows for the tracking of network files
 ## Current Modules
 
 - [x] APC Payroll Tracking
+- [x] GCS Payroll Tracking  
+- [x] MEC Payroll Tracking 
+- [x] Email notifications of found files
+- [x] Multi-threading checks  
+
 
 ## Settings
 
@@ -19,19 +24,14 @@ Update config.py to allow for mutiple companies
 Update the delay interval for changes in fetch sensitivity
 
 ```python
-COMPANIES = [('01000', 'APL')]
+COMPANIES = [('09900', 'TEST')]
 
 DELAY_INTERVAL = 180
 ```
 
 
-
-
 ## Potential future modules
 
-- [ ] Asynchronous coroutine  
-- [ ] MEC Payroll Tracking 
-- [ ] GCS Payroll Tracking  
 - [ ] APC Garnishment Tracking 
 - [ ] MEC Garnishment Tracking 
 - [ ] GCS Garnishment Tracking 
@@ -41,7 +41,7 @@ DELAY_INTERVAL = 180
 
 ## How to use
 
-Sentinel runs asychronously as a background process. Launch run.bat or create a scheduled task pointing to run.bat
+Sentinel runs multi-threaded as a background process. Launch run.bat or create a scheduled task pointing to run.bat
 
 ## Support
 
