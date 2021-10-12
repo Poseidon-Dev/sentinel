@@ -44,6 +44,21 @@ Defaults to 3 minutes
 DELAY_INTERVAL = 180
 ```
 
+core.apl contains the format for creating new threads 
+All function's threads are appended to the "threads" list
+```python
+paths = [
+    {
+        'src' : Path(SourcePath, comp['src']),
+        'dst' : Path(SourcePath, comp['dst'], defaults.ACH_DST_SUFFIX)
+    }
+        for comp in defaults.COMPANIES
+    ]
+
+    sentinels = [Sentinel(path['src'], path['dst']) for path in paths]
+    return [threading.Thread(target=s.run) for s in sentinels]
+```
+
 
 ## Potential future modules
 - [ ] APC Positive Pay Tracking 
