@@ -3,14 +3,16 @@ from apps import Path, Snapshot, AchFile, Put, Sentinel
 p = Path('C:\Apps\TESTDIR')
 drop = Path('C:\Apps\TESTDUMP')
 
-s = Sentinel(p, drop)
+s = Snapshot(p).list_snap()
 
-comps = s.changes()
+# s = Sentinel(p, drop)
 
-for status, files in comps.items():
-    print(status)
-    for f in files:
-        print(f)
+# comps = s.changes()
+
+# for status, files in comps.items():
+#     print(status)
+#     for f in files:
+#         print(f)
 
 
 # ach = [AchFile(f) for f in s.files]

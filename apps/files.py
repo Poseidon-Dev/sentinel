@@ -77,12 +77,12 @@ class RawFile:
             f'name: {self.name}\n'
             f'file: {self.file_name}\n'
             f'type: {self.ext}\n'
-            f'local path: {self.local_path}\n'
-            f'abs path: {self.path} \n'
+            # f'local path: {self.local_path}\n'
+            # f'abs path: {self.path} \n'
             f'size: {self.size}\n'
             f'last modified: {self.mod_date}\n'
             f'last accessed: {self.acc_date}\n'
-            f'tree: {self.tree}\n'
+            # f'tree: {self.tree}\n'
         )    
 
 class AchFile(RawFile):
@@ -106,10 +106,22 @@ class AchFile(RawFile):
     @property
     def count(self):
         """
-        Removes the extra lines and returns the amount of 
-        people who received a check in the batch
+        Searches from the rear of the file
+        and looks for a line that starts with x
+        Takes the line that is 2 lines above and 
+        takes an integer value of the last 5
         """
-        return len(self._lines()) - 8
+        lines = self._lines()
+        count_line = ''
+        last = len(lines) - 1
+        while not count_line:
+            for letter in lines[last][-2]:
+                if letter != 'X':
+                    last -= 1
+                else:
+                    count_line = lines[last-2]
+        count_line = count_line.replace(' ','')[-5:]
+        return int(count_line)
 
     @property
     def save_name(self):
@@ -128,11 +140,21 @@ class AchFile(RawFile):
     @property
     def total(self):
         """
-        Returns the total amount issued to the bank
-        BUGGED
+        Returns the total amount in the file
+        Looks from the back side of the file for a line that ends with X
+        Once the line is found, it removes space and the x value from the line
+        then takes the last 10 characters and converts to a decimal
         """
-        total_line = self._lines()[-5:][0].replace(' ','')
-        total_line = total_line.replace('X', '')[-10:]
+        lines = self._lines()
+        total_line = ''
+        last = len(lines) - 1
+        while not total_line:
+            for letter in lines[last][-2]:
+                if letter != 'X':
+                    last -= 1
+                else:
+                    total_line = lines[last]
+        total_line = total_line.replace('X', '').replace(' ','')[-10:]
         return int(total_line)/100
             
     def __str__(self):
@@ -167,9 +189,24 @@ class GarnFile(RawFile):
     @property
     def count(self):
         """
-        
+        Searches from the rear of the file
+        and looks for a line that starts with x
+        Takes the line that is 2 lines above and 
+        takes an integer value of the last 5
         """
-        return int(self._lines()[-5:][0][-5:])-1
+        lines = self._lines()
+        count_line = ''
+        last = len(lines) - 1
+        while not count_line:
+            for letter in lines[last][-2]:
+                if letter != 'X':
+                    last -= 1
+                else:
+                    count_line = lines[last-2]
+        count_line = count_line.replace(' ','')[-5:]
+        return int(count_line)
+
+        # return int(self._lines()[-5:][0][-5:])
 
     @property
     def save_name(self):
@@ -184,11 +221,21 @@ class GarnFile(RawFile):
     @property
     def total(self):
         """
-        Returns the total amount issued to the bank
-        BUGGED
+        Returns the total amount in the file
+        Looks from the back side of the file for a line that ends with X
+        Once the line is found, it removes space and the x value from the line
+        then takes the last 10 characters and converts to a decimal
         """
-        total_line = self._lines()[-3:][0].replace(' ','')
-        total_line = total_line.replace('X', '')[-10:]
+        lines = self._lines()
+        total_line = ''
+        last = len(lines) - 1
+        while not total_line:
+            for letter in lines[last][-2]:
+                if letter != 'X':
+                    last -= 1
+                else:
+                    total_line = lines[last]
+        total_line = total_line.replace('X', '').replace(' ','')[-10:]
         return int(total_line)/100
             
     def __str__(self):
