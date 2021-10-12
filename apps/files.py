@@ -1,5 +1,10 @@
 import os.path
 
+__all__ = ['File', 'AchFile', 'GarnFile']
+
+ACH_PATHS = ['ACH', 'DIRECT DEPOSIT', 'PR2110011.092921.132424.TXT']
+GARN_PATHS = ['EFT', 'GARNISHMENTS', 'CTX.AP01000.100821.104909.TXT']
+
 class RawFile:
     """
     Accepts a file from OS module to create an 
@@ -124,6 +129,7 @@ class AchFile(RawFile):
     def total(self):
         """
         Returns the total amount issued to the bank
+        BUGGED
         """
         total_line = self._lines()[-5:][0].replace(' ','')
         total_line = total_line.replace('X', '')[-10:]
@@ -141,21 +147,64 @@ class AchFile(RawFile):
     
 
 class GarnFile(RawFile):
+    """
+    A child of File
+    Adds additional support for AchFiles from the ERP
+    including the total, count, and some name parsing
+    """
     
     def __init__(self, f):
-        super(AchFile, self).__init__(f)
-        if not self.check():
-            raise TypeError('Obj is not an Garnishments')
+        super(GarnFile, self).__init__(f)
+        
+    def _lines(self):
+        """
+        A simple list return of the AchFile
+        """
+        with open(self.path, 'r') as f:
+            lines = f.readlines()
+        return lines
 
+    @property
+    def count(self):
+        """
+        
+        """
+        return int(self._lines()[-5:][0][-5:])-1
+
+    @property
+    def save_name(self):
+        """
+        Extracts the save name given by the ERP system
+        """
+        prefix = 'APEFT PPD '
+        file = self.file.name.split('.')[2] 
+        file = f"20{file[-2:]}{file[:2]}{file[2:4]}"
+        return prefix + file
+
+    @property
+    def total(self):
+        """
+        Returns the total amount issued to the bank
+        BUGGED
+        """
+        total_line = self._lines()[-3:][0].replace(' ','')
+        total_line = total_line.replace('X', '')[-10:]
+        return int(total_line)/100
+            
+    def __str__(self):
+        str = super(GarnFile, self).__str__()
+        return (
+            f'{str}'
+            f'ERP Name: {self.save_name}\n'   
+            f'check count: {self.count}\n'   
+            f'total: {self.total}\n'  
+        )
 
 class File:
     """
     Factory class for creating subclasses if criteria is met
     """
     def __new__(cls, f):
-        ACH_PATHS = ['ACH', 'DIRECT DEPOSIT', 'PR2110011.092921.132424.TXT']
-        GARN_PATHS = ['ACH', 'DIRECT DEPOSIT', 'APS']
-
         raw = RawFile(f)
         if any(t in raw.tree for t in ACH_PATHS):
             return AchFile(f)

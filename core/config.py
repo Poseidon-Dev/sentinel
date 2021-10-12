@@ -9,7 +9,7 @@ COMPANIES = [
     {'src': '40001', 'dst': 'GCS'},
 ]
 CURRENT_YEAR = str(date.today().year)
-DELAY_INTERVAL = 180
+DELAY_INTERVAL = 5
 
 ACH_DST_PATH = os.getenv('ACH_DST_PATH').replace('XXXX', CURRENT_YEAR)
 ACH_DST_SUFFIX = os.getenv('ACH_DST_SUFFIX')
