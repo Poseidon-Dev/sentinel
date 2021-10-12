@@ -4,4 +4,4 @@ COMPANIES = [
     {'src': '40001', 'dst': 'GCS'},
 ]
 
-DELAY_INTERVAL = 180
+DELAY_INTERVAL = 30

@@ -1,7 +1,7 @@
 import time
 from email.message import EmailMessage
 import smtplib, ssl
-import core.config
+from core import defaults
 
 class Timer:
 
@@ -19,11 +19,11 @@ class Timer:
 
 
 def send_email(subject, message):
-    port = core.config.EMAIL_SMTP_PORT
-    smtp_server = core.config.EMAIL_SMTP
-    sender = core.config.EMAIL_UID
-    password = core.config.EMAIL_PWD
-    recipient = ['jwhitworth@arizonapipeline.com']
+    port = defaults.EMAIL_SMTP_PORT
+    smtp_server = defaults.EMAIL_SMTP
+    sender = defaults.EMAIL_UID
+    password = defaults.EMAIL_PWD
+    recipient = ['ecms-file-transfers@arizonapipeline.com']
 
     msg = EmailMessage()
     msg['Subject'] = subject

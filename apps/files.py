@@ -73,15 +73,15 @@ class RawFile:
 
     def __str__(self):
         return (
-            f'class: {self.__class__.__name__}\n'
-            f'name: {self.name}\n'
+            # f'class: {self.__class__.__name__}\n'
+            # f'name: {self.name}\n'
             f'file: {self.file_name}\n'
-            f'type: {self.ext}\n'
+            # f'type: {self.ext}\n'
             # f'local path: {self.local_path}\n'
             # f'abs path: {self.path} \n'
             f'size: {self.size}\n'
-            f'last modified: {self.mod_date}\n'
-            f'last accessed: {self.acc_date}\n'
+            # f'last modified: {self.mod_date}\n'
+            # f'last accessed: {self.acc_date}\n'
             # f'tree: {self.tree}\n'
         )    
 
