@@ -4,8 +4,8 @@ from datetime import date
 COMPANIES = [('01000', 'APL'), ('30000', 'MEC'), ('40001', 'GCS')]
 # COMPANIES = [('01000', 'APL')]
 COMPANIES = [
-    {'src': '01000', 'dst': 'APL'},
-    {'src': '30000', 'dst': 'MEE'},
+    # {'src': '01000', 'dst': 'APL'},
+    # {'src': '30000', 'dst': 'MEE'},
     {'src': '40001', 'dst': 'GCS'},
 ]
 CURRENT_YEAR = str(date.today().year)

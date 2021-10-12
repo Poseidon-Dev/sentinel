@@ -15,7 +15,7 @@ class Put:
 
     def check(self, count=0):
         from os.path import exists
-        
+
         if count == 0:
             name = self.file.save_name
         else:
@@ -28,7 +28,7 @@ class Put:
 
     def put(self):
         try:
-            copy2(self.file.path, self.check())
+            copy2(self.file.path, self.dst + self.file.save_name)
         except Exception as e:
             print(e)
 
