@@ -56,7 +56,7 @@ paths = [
     ]
 
     sentinels = [Sentinel(path['src'], path['dst']) for path in paths]
-    return [threading.Thread(target=s.run) for s in sentinels]
+    threads = [threading.Thread(target=s.run) for s in sentinels]
 ```
 
 
