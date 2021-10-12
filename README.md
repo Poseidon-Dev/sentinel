@@ -49,10 +49,10 @@ All function's threads are appended to the "threads" list
 ```python
 paths = [
     {
-        'src' : Path(SourcePath, comp['src']),
-        'dst' : Path(SourcePath, comp['dst'],)
+        'src' : Path(defaults.SourcePath, comp['src']),
+        'dst' : Path(defaults.SourcePath, comp['dst'],)
     }
-        for comp in defaults.COMPANIES
+        for comp in config.COMPANIES
     ]
 
 sentinels = [Sentinel(path['src'], path['dst']) for path in paths]

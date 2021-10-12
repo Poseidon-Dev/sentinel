@@ -1,7 +1,7 @@
 import threading
 from apps import Path, Sentinel
 
-from core import defaults
+from core import defaults, config
 
 def ach_threads():
     paths = [
@@ -9,7 +9,7 @@ def ach_threads():
             'src' : Path(defaults.ACH_SRC_PATH, comp['src']),
             'dst' : Path(defaults.ACH_DST_PATH, comp['dst'], defaults.ACH_DST_SUFFIX)
         }
-            for comp in defaults.COMPANIES
+            for comp in config.COMPANIES
         ]
 
     sentinels = [Sentinel(path['src'], path['dst']) for path in paths]
@@ -21,7 +21,7 @@ def garnishment_threads():
             'src' : Path(defaults.GAR_SRC_PATH, comp['src']),
             'dst' : Path(defaults.GAR_DST_PATH, comp['dst'], defaults.GAR_DST_SUFFIX)
         }
-            for comp in defaults.COMPANIES
+            for comp in config.COMPANIES
         ]
 
     sentinels = [Sentinel(path['src'], path['dst']) for path in paths]
