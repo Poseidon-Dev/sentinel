@@ -50,7 +50,7 @@ All function's threads are appended to the "threads" list
 paths = [
     {
         'src' : Path(SourcePath, comp['src']),
-        'dst' : Path(SourcePath, comp['dst'], defaults.ACH_DST_SUFFIX)
+        'dst' : Path(SourcePath, comp['dst'],)
     }
         for comp in defaults.COMPANIES
     ]
