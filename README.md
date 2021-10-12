@@ -14,27 +14,38 @@ Further, it allows for the tracking of network files
 - [x] APC Payroll Tracking
 - [x] GCS Payroll Tracking  
 - [x] MEC Payroll Tracking 
+- [x] APC Garnishment Tracking 
+- [x] MEC Garnishment Tracking 
+- [x] GCS Garnishment Tracking 
 - [x] Email notifications of found files
 - [x] Multi-threading checks  
 
 
 ## Settings
 
-Update config.py to allow for mutiple companies
-Update the delay interval for changes in fetch sensitivity
-
+Update COMPANIES in config.py for additional file checks
+Adding additional source (src) and destinations (dst)
 ```python
-COMPANIES = [('09900', 'TEST')]
+COMPANIES = [
+    {
+        'src': '09900', 
+        'dst': 'TESTCOMPANY'
+    }
+]
+```
 
+Update DELAY_INTERVAL to for changes in fetch sensitivity
+The lower the number, the greater the amount of fetches within a minute but
+an increasd amount of potential issues. 
+The larger the number, the lower the amount of fetches within a minute but 
+a decreased amount of potential issues.
+Defaults to 3 minutes
+```python
 DELAY_INTERVAL = 180
 ```
 
 
 ## Potential future modules
-
-- [ ] APC Garnishment Tracking 
-- [ ] MEC Garnishment Tracking 
-- [ ] GCS Garnishment Tracking 
 - [ ] APC Positive Pay Tracking 
 - [ ] MEC Positive Pay Tracking 
 - [ ] GCS Positive Pay Tracking 
