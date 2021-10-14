@@ -10,6 +10,9 @@ class Path:
         self.subdirs = subdirs
 
     def path(self):
+        """
+        Appends any additional args as subdirectories
+        """
         path = self.dir
         for sub in self.subdirs:
             path += '/' + sub

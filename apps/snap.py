@@ -19,13 +19,25 @@ class Snapshot:
             print(f)
 
     def snap(self, path:Path):
+        """
+        Returns a list of File objects found in a directory
+        """
         from os import scandir
         return [File(f) for f in scandir(path.path())]
 
     def snap_set(self):
+        """
+        Converts the snap into a set 
+        """
         return set(f.file_name for f in self.files)
 
     def compare(self, instance):
+        """
+        Compares two snaps
+        If new files are found in the second, add to the compare dictionary as created
+        If new files are found in the initial, add to the compare dictionary as deleted
+        Returns the dictionary 
+        """
         compare = {}
         created = instance.snap_set() - self.snap_set()
         deleted = self.snap_set() - instance.snap_set()

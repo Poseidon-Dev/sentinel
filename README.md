@@ -34,17 +34,34 @@ COMPANIES = [
 ]
 ```
 
-Update DELAY_INTERVAL to for changes in fetch sensitivity
+Update DELAY_INTERVAL for changes in fetch sensitivity
+
 The lower the number, the greater the amount of fetches within a minute but
 an increasd amount of potential issues. 
+
 The larger the number, the lower the amount of fetches within a minute but 
 a decreased amount of potential issues.
-Defaults to 3 minutes
+
+Defaults to 1 minute
 ```python
 DELAY_INTERVAL = 180
 ```
 
+When creating a Put, it will check to see if the destination file already exists. If a file is already in the directory 
+then it will append the next subsequent letter to the file name.
+This will fail if there are more than 10 instances of a file in the same directory
+```python
+while os.path.exists(path):
+    if path[-1] in self.APPENDS:
+        path = path[:len(path)-1] + self.APPENDS[count]
+    else:
+        path = path + self.APPENDS[count]
+    count +=1
+return path
+```
+
 core.apl contains the format for creating new threads 
+
 All function's threads are appended to the "threads" list
 ```python
 paths = [

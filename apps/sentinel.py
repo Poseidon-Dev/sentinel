@@ -47,6 +47,9 @@ class Sentinel:
                         print(e)
 
     def run(self):
+        """
+        Consistant loop of transfer_files
+        """
         while True:
             self.transfer_files()
 

@@ -14,6 +14,10 @@ class Put:
         self.dst = self.check(f'{self.path}/{self.file.save_name}')
 
     def check(self, path, count=0):
+        """
+        Checks to see if the file exists in the specified directory
+        If a file is found, append a letter to the end up to J
+        """
         while os.path.exists(path):
             if path[-1] in self.APPENDS:
                 path = path[:len(path)-1] + self.APPENDS[count]
@@ -24,6 +28,9 @@ class Put:
 
 
     def put(self):
+        """
+        Uses shututil copy2 to place the file in the destination
+        """
         try:
             copy2(self.file.path, self.dst)
         except Exception as e:
