@@ -77,12 +77,6 @@ sentinels = [Sentinel(path['src'], path['dst']) for path in paths]
 threads = [threading.Thread(target=s.run) for s in sentinels]
 ```
 
-
-## Potential future modules
-- [ ] APC Positive Pay Tracking 
-- [ ] MEC Positive Pay Tracking 
-- [ ] GCS Positive Pay Tracking 
-
 ## How to use
 
 Sentinel runs multi-threaded as a background process. Launch run.bat or create a scheduled task pointing to run.bat
