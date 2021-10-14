@@ -3,9 +3,11 @@ from apps import Path, Snapshot, AchFile, Put, Sentinel
 p = Path('C:\Apps\TESTDIR')
 drop = Path('C:\Apps\TESTDUMP')
 
-s = Snapshot(p).list_snap()
+# s = Snapshot(p).list_snap()
 
-# s = Sentinel(p, drop)
+s = Sentinel(p, drop)
+
+s.run()
 
 # comps = s.changes()
 

@@ -39,8 +39,12 @@ class Sentinel:
             if status == 'created':
                 for f in files:
                     print(f)
-                    send_email('Payroll File Transfer', f.__str__())
-                    Put(f, self.dst).put()
+                    try:
+                        Put(f, self.dst).put()
+                        send_email(f'{f.__class__.__name__} Transfer Found', f.__str__())
+                    except Exception as e:
+                        send_email(f'{f.__class__.__name__} Transfer Found', f'AN ERROR OCCURED: {e} ')
+                        print(e)
 
     def run(self):
         while True:
