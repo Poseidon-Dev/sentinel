@@ -44,8 +44,9 @@ a decreased amount of potential issues.
 
 Defaults to 1 minute
 ```python
-DELAY_INTERVAL = 180
+DELAY_INTERVAL = 60
 ```
+
 
 When creating a Put, it will check to see if the destination file already exists. If a file is already in the directory 
 then it will append the next subsequent letter to the file name.
@@ -60,8 +61,8 @@ while os.path.exists(path):
 return path
 ```
 
-core.apl contains the format for creating new threads 
 
+core.apl contains the format for creating new threads.
 All function's threads are appended to the "threads" list
 ```python
 paths = [
