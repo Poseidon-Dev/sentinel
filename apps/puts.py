@@ -1,4 +1,4 @@
-from apps import Path, File
+from apps import Path
 from shutil import copy2
 import os.path
 

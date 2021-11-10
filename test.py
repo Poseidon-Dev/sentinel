@@ -1,13 +1,20 @@
-from apps import Path, Snapshot, AchFile, Put, Sentinel
+from apps import Path, Snapshot
+from apps.files import File
 
 p = Path('C:\Apps\TESTDIR')
 drop = Path('C:\Apps\TESTDUMP')
 
+s = Snapshot(p).files
+for f in s:
+    print(f)
+
+
+
 # s = Snapshot(p).list_snap()
 
-s = Sentinel(p, drop)
+# s = Sentinel(p, drop)
 
-s.run()
+# s.run()
 
 # comps = s.changes()
 

@@ -1,15 +1,18 @@
 import os.path
+from apps.path import Path
 
-__all__ = ['File', 'AchFile', 'GarnFile']
+from core.config import ACH_PATHS, GARN_PATHS
 
-ACH_PATHS = ['ach', 'DIRECT DEPOSIT', 'PR2110011.092921.132424.TXT']
-GARN_PATHS = ['eft', 'GARNISHMENTS', 'CTX.AP01000.100821.104909.TXT']
+__all__ = ['File', 'AchFile', 'GarnFile',]
 
-class RawFile:
+    
+class RawFile():
     """
     Accepts a file from OS module to create an 
     encompassing class for easy manipulations
     """
+
+    PATHS = None
 
     def __init__(self, f):
         self.file = f
@@ -19,6 +22,7 @@ class RawFile:
         self.local_path = self.file.path      
         self.path = os.path.abspath(self.local_path)
 
+
     @property
     def mod_date(self):
         """
@@ -26,6 +30,7 @@ class RawFile:
         """
         from datetime import datetime
         return datetime.fromtimestamp(self.stats.st_mtime)
+
 
     @property
     def acc_date(self):
@@ -35,6 +40,7 @@ class RawFile:
         from datetime import datetime
         return datetime.fromtimestamp(self.stats.st_atime)
 
+
     @property
     def tree(self):
         """
@@ -42,12 +48,14 @@ class RawFile:
         """
         return self.path.split('\\')
 
+
     @property
     def ext(self):
         """
         returns the extention of a file
         """
         return self.name.split('.')[-1]
+
 
     @property
     def file_name(self):
@@ -59,11 +67,55 @@ class RawFile:
         name.pop()
         return '.'.join(name)
 
+
+    @property
+    def _lines(self):
+        """
+        A simple list return of the File
+        """
+        if self.ext.lower() in ('csv', 'txt'):
+            with open(self.path, 'r') as f:
+                _lines = f.readlines()
+            return _lines
+        else:
+            return []
+
+
+    @property
+    def count(self):
+        return 0
+
+
+    @property
+    def total(self):
+        return 0
+
+    @property
+    def save_name(self):
+        """
+        Returns the save name
+        """
+        return self.file_name
+    
+
+    @property
+    def save_date(self):
+        """
+        Returns the save date
+        """
+        return self.mod_date
+
+
+    def rawfile_type(self, f):
+        return any(t in self.tree for t in self.PATHS)
+
+
     def __gt__(self, instance):
         """
         lexiographical comparison based on filename
         """
         return self.file_name.lower() > instance.file_name.lower()
+
 
     def __eq__(self, instance):
         """
@@ -71,37 +123,26 @@ class RawFile:
         """
         return self.file_name.lower() == instance.file_name.lower()
 
+
     def __str__(self):
         return (
-            # f'class: {self.__class__.__name__}\n'
-            # f'name: {self.name}\n'
+            f'file type: {self.__class__.__name__}\n'
             f'file: {self.file_name}\n'
-            # f'type: {self.ext}\n'
-            # f'local path: {self.local_path}\n'
-            # f'abs path: {self.path} \n'
             f'size: {self.size}\n'
-            # f'last modified: {self.mod_date}\n'
-            # f'last accessed: {self.acc_date}\n'
-            # f'tree: {self.tree}\n'
         )    
 
 class AchFile(RawFile):
     """
-    A child of File
+
     Adds additional support for AchFiles from the ERP
     including the total, count, and some name parsing
     """
+
+    PATHS = ACH_PATHS
     
     def __init__(self, f):
         super(AchFile, self).__init__(f)
 
-    def _lines(self):
-        """
-        A simple list return of the AchFile
-        """
-        with open(self.path, 'r') as f:
-            lines = f.readlines()
-        return lines
 
     @property
     def count(self):
@@ -111,17 +152,21 @@ class AchFile(RawFile):
         Takes the line that is 2 lines above and 
         takes an integer value of the last 5
         """
-        lines = self._lines()
-        count_line = ''
-        last = len(lines) - 1
-        while not count_line:
-            for letter in lines[last][-2]:
-                if letter != 'X':
-                    last -= 1
-                else:
-                    count_line = lines[last-2]
-        count_line = count_line.replace(' ','')[-5:]
-        return int(count_line)
+        lines = self._lines
+        if lines:
+            count_line = ''
+            last = len(lines) - 1
+            while not count_line:
+                for letter in lines[last][-2]:
+                    if letter != 'X':
+                        last -= 1
+                    else:
+                        count_line = lines[last-2]
+            count_line = count_line.replace(' ','')[-5:]
+            return int(count_line)
+        else:
+            return 0
+
 
     @property
     def save_name(self):
@@ -130,12 +175,14 @@ class AchFile(RawFile):
         """
         return self.file.name.split('.')[0] 
     
+
     @property
     def save_date(self):
         """
         Extracts the save date given by the ERP system
         """
         return self.file.name.split('.')[1] 
+
 
     @property
     def total(self):
@@ -145,18 +192,22 @@ class AchFile(RawFile):
         Once the line is found, it removes space and the x value from the line
         then takes the last 10 characters and converts to a decimal
         """
-        lines = self._lines()
-        total_line = ''
-        last = len(lines) - 1
-        while not total_line:
-            for letter in lines[last][-2]:
-                if letter != 'X':
-                    last -= 1
-                else:
-                    total_line = lines[last]
-        total_line = total_line.replace('X', '').replace(' ','')[-10:]
-        return int(total_line)/100
+        lines = self._lines
+        if lines:
+            total_line = ''
+            last = len(lines) - 1
+            while not total_line:
+                for letter in lines[last][-2]:
+                    if letter != 'X':
+                        last -= 1
+                    else:
+                        total_line = lines[last]
+            total_line = total_line.replace('X', '').replace(' ','')[-10:]
+            return int(total_line)/100
+        else:
+            0
             
+
     def __str__(self):
         str = super(AchFile, self).__str__()
         return (
@@ -170,21 +221,15 @@ class AchFile(RawFile):
 
 class GarnFile(RawFile):
     """
-    A child of File
     Adds additional support for AchFiles from the ERP
     including the total, count, and some name parsing
     """
+
+    PATHS = GARN_PATHS
     
     def __init__(self, f):
         super(GarnFile, self).__init__(f)
         
-    def _lines(self):
-        """
-        A simple list return of the AchFile
-        """
-        with open(self.path, 'r') as f:
-            lines = f.readlines()
-        return lines
 
     @property
     def count(self):
@@ -194,19 +239,21 @@ class GarnFile(RawFile):
         Takes the line that is 2 lines above and 
         takes an integer value of the last 5
         """
-        lines = self._lines()
-        count_line = ''
-        last = len(lines) - 1
-        while not count_line:
-            for letter in lines[last][-2]:
-                if letter != 'X':
-                    last -= 1
-                else:
-                    count_line = lines[last-2]
-        count_line = count_line.replace(' ','')[-5:]
-        return int(count_line)
+        lines = self._lines
+        if lines:
+            count_line = ''
+            last = len(lines) - 1
+            while not count_line:
+                for letter in lines[last][-2]:
+                    if letter != 'X':
+                        last -= 1
+                    else:
+                        count_line = lines[last-2]
+            count_line = count_line.replace(' ','')[-5:]
+            return int(count_line)
+        else:
+            return 0
 
-        # return int(self._lines()[-5:][0][-5:])
 
     @property
     def save_name(self):
@@ -218,6 +265,7 @@ class GarnFile(RawFile):
         file = f"20{file[-2:]}{file[:2]}{file[2:4]}"
         return prefix + file
 
+
     @property
     def total(self):
         """
@@ -226,18 +274,22 @@ class GarnFile(RawFile):
         Once the line is found, it removes space and the x value from the line
         then takes the last 10 characters and converts to a decimal
         """
-        lines = self._lines()
-        total_line = ''
-        last = len(lines) - 1
-        while not total_line:
-            for letter in lines[last][-2]:
-                if letter != 'X':
-                    last -= 1
-                else:
-                    total_line = lines[last]
-        total_line = total_line.replace('X', '').replace(' ','')[-10:]
-        return int(total_line)/100
-            
+        lines = self._lines
+        if lines:
+            total_line = ''
+            last = len(lines) - 1
+            while not total_line:
+                for letter in lines[last][-2]:
+                    if letter != 'X':
+                        last -= 1
+                    else:
+                        total_line = lines[last]
+            total_line = total_line.replace('X', '').replace(' ','')[-10:]
+            return int(total_line)/100
+        else:
+            0
+
+
     def __str__(self):
         str = super(GarnFile, self).__str__()
         return (
@@ -252,13 +304,9 @@ class File:
     Factory class for creating subclasses if criteria is met
     """
     def __new__(cls, f):
-        raw = RawFile(f)
-        if any(t in raw.tree for t in ACH_PATHS):
-            return AchFile(f)
-        if any(t in raw.tree for t in GARN_PATHS):
-            return GarnFile(f)
-        else:
-            return raw
+        for subcls in RawFile.__subclasses__():
+            if subcls(f).rawfile_type(f):
+                return subcls(f)
 
-
+        return RawFile(f)
 

@@ -39,6 +39,7 @@ class Sentinel:
             if status == 'created':
                 for f in files:
                     print(f)
+                    print(self.dst)
                     try:
                         Put(f, self.dst).put()
                         send_email(f'{f.__class__.__name__} Transfer Found', f.__str__())
