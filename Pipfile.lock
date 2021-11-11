@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a36a5392bb1e8bbc06bfaa0761e52593cf2d83b486696bf54667ba8da616c839"
+            "sha256": "49b54295ec818e25925753a673f2bb75019e84fc0572a9f7440285910b6fb7fa"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.9"
+            "python_version": "*"
         },
         "sources": [
             {
@@ -15,6 +15,15 @@
             }
         ]
     },
-    "default": {},
+    "default": {
+        "poseidonsentinel": {
+            "hashes": [
+                "sha256:45ddc02a2aec9fd62ccefc67ef2be5b553c16df0ed2c9fee688f44f02513b9a7",
+                "sha256:a73d82721cff39fd7beb5f7ba27c42ba69878a58492606cdfd37c67ed7dbf99c"
+            ],
+            "index": "pypi",
+            "version": "==0.1.2"
+        }
+    },
     "develop": {}
 }
